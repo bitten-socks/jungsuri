@@ -19,11 +19,11 @@ SCALP_COLOR_RANGES = {
 
 # 점수에 따른 결과 등급 데이터
 RESULT_DATA = {
-    (0, 20): {"grade": "[1단계]\n🌳 모(毛)의 왕국 🌳", "image": "rank1.png", "quote": "걱정은 저 멀리 던져버리세요.", "comment": "당신의 두피는 평화로운 숲과 같습니다.\n지금처럼만 유지해주세요!"},
-    (21, 40): {"grade": "[2단계]\n🌱 평화로운 잔디밭 🌱", "image": "rank2.png", "quote": "아직 늦지 않았습니다. 희망을 가지세요.", "comment": "조금 비어 보이는 곳이 있지만,충분히 관리 가능합니다.\n긍정적인 마음이 중요해요!"},
+    (81, 100): {"grade": "[1단계]\n🌳 모(毛)의 왕국 🌳", "image": "rank1.png", "quote": "걱정은 저 멀리 던져버리세요.", "comment": "당신의 두피는 평화로운 숲과 같습니다.\n지금처럼만 유지해주세요!"},
+    (61, 80): {"grade": "[2단계]\n🌱 평화로운 잔디밭 🌱", "image": "rank2.png", "quote": "아직 늦지 않았습니다. 희망을 가지세요.", "comment": "조금 비어 보이는 곳이 있지만,충분히 관리 가능합니다.\n긍정적인 마음이 중요해요!"},
     (41, 60): {"grade": "[3단계]\n🚨 고속도로 착공 시작 🚨", "image": "rank3.png", "quote": "AI는... 거짓말을 하지 않습니다.", "comment": "이제는 관리가 필요한 시점입니다.\n현실을 직시하고 대책을 세워보는 건 어떨까요?"},
-    (61, 80): {"grade": "[4단계]\n🌬️ 바람의 언덕 🌬️", "image": "rank4.png", "quote": "괜찮아요...\n머리카락이 인생의 전부는 아니잖아요?", "comment": "두피가 휑한 바람을 느끼고 있습니다.\n당신의 매력은 머리숱에만 있는 것이 아닙니다!"},
-    (81, 100): {"grade": "[5단계]\n💡 무념무상(無念無想)의 경지 💡", "image": "rank5.png", "quote": "해탈의 경지에 오르셨군요.", "comment": "모든 것을 내려놓은 당신,\n그 어떤 것에도 흔들리지 않는 평온함을 얻었습니다."}
+    (21, 40): {"grade": "[4단계]\n🌬️ 바람의 언덕 🌬️", "image": "rank4.png", "quote": "괜찮아요...\n머리카락이 인생의 전부는 아니잖아요?", "comment": "두피가 휑한 바람을 느끼고 있습니다.\n당신의 매력은 머리숱에만 있는 것이 아닙니다!"},
+    (0, 20): {"grade": "[5단계]\n💡 무념무상(無念無想)의 경지 💡", "image": "rank5.png", "quote": "해탈의 경지에 오르셨군요.", "comment": "모든 것을 내려놓은 당신,\n그 어떤 것에도 흔들리지 않는 평온함을 얻었습니다."}
 }
 
 def analyze_image(image_file, hair_color):
@@ -59,7 +59,9 @@ def analyze_image(image_file, hair_color):
         total_pixels = closed_mask.shape[0] * closed_mask.shape[1]
         
         # 6. 점수 계산 로직은 이전과 동일합니다.
-        score = min(100, int((scalp_pixel_count / total_pixels) * 100))
+        # score = min(100, int((scalp_pixel_count / total_pixels) * 100))
+        hair_loss_score = min(100, int((scalp_pixel_count / total_pixels) * 100))
+        score = 100 - hair_loss_score # 점수 체계 반전
         
         return score
     except Exception as e:
